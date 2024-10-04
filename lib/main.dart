@@ -1,7 +1,9 @@
+import 'package:first_app/Controller/main_screen_notifier.dart';
 import 'package:first_app/style/app_color_style.dart';
 import 'package:first_app/views/ui/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -9,7 +11,16 @@ void main() {
       systemNavigationBarColor: AppColorStyle.bgColor,
     ),
   );
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => MainScreenNotifier(),
+        )
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,9 +29,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MainScreen(),
+      theme: ThemeData.dark(),
     );
   }
 }
